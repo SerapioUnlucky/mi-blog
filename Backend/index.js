@@ -13,24 +13,8 @@ app.options('*', cors());
 
 app.use("/api", rutas_articulo);
 
-const options = {
-    useNewUrlParser: true,
-    autoIndex: true,
-    keepAlive: true,
-    connectTimeoutMS: 10000,
-    socketTimeoutMS: 45000,
-    family: 4,
-    useUnifiedTopology: true
-}
+app.listen(process.env.PORT, () => console.log('Servidor corriendo en el puerto: ' + process.env.PORT));
 
-mongoose.connect(process.env.DB, options, function (error) {
-    if(error){
-        console.log(error);
-    }
-})
-
-app.listen(process.env.PORT, () => {
-    console.log("Server is running "+process.env.PORT);
-})
+mongoose.connect(process.env.DB).then(() => console.log('Conexión a la base de datos establecida')).catch(err => console.log(err));
 
 module.exports = app;
